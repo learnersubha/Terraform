@@ -8,7 +8,7 @@ After installing terraform open vs-code an open a terminal within vs-code and ru
 
 Now you need to install providers. you can install any provider linke aws, azure, gcp etc. Here I required AWS so, install aws provider
 
-terraform { required_providers { aws = { source = "hashicorp/aws" version = "5.91.0" } } }
+For aws provider installation click on the link (https://registry.terraform.io/providers/hashicorp/aws/latest/docs) and click on use provider 
 
 After provider installation again run the terra form init command
 
