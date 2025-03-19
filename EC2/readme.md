@@ -14,3 +14,9 @@ After provider installation again run the terra form init command
 
 and then create required files for EC2 instance.
 
+Now you need to check every terrafor files are validate or not. For this use terraform validate command
+
+Then use terraform plan command and you show what out put you will get.
+
+And finally use terraform apply command and your instance will be created.
+
