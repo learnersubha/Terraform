@@ -13,4 +13,4 @@ variable.tf --> For creating this ekd cluster used local variables, you can use 
 
 vpc.tf --> creating vpc and subnets for deploying the eks cluster and its worker node within the vpc.
 
-eks.tf --> 
+eks.tf --> here you get about the cluster info (control-plane), control-plane network, managing nodes in the cluster.
