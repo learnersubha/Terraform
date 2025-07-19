@@ -1,7 +1,7 @@
-# SSH key 
+# Create key pair
 resource aws_key_pair create_key {
     key_name = "microft-tf-key"
-    public_key = file("ec2-key.pub")
+    public_key = file("example.pub  ## your public key name")
 }
 
 # VPC & Security Groups
