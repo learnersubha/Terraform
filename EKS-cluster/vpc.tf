@@ -1,8 +1,8 @@
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 5.13"  # This version works with AWS provider 5.x
+  version = "~> 5.13"  
   
-  # rest of your VPC configuration stays the same
+  
   name = "${var.name}-vpc"
   cidr = var.cidr
   azs = var.azs
