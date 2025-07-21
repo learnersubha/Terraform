@@ -1,66 +1,64 @@
-# Create key pair
-resource aws_key_pair create_key {
-    key_name = "microft-tf-key"
-    public_key = file("example.pub  ## your public key name")
-}
-
-# VPC & Security Groups
-resource aws_default_vpc default {
+## Create key
+resource "aws_key_pair" "demo_key" {
+  key_name   = "terra_key"
+  public_key = file("terra-key.pub")
 
 }
 
-resource aws_security_group microft_security_group {
-     name = "tf-security"
-     description = "For creating security group"
-     vpc_id = aws_default_vpc.default.id
+## VPC create
+ resource "aws_default_vpc" "demo" {
+  
+  
+}
 
-    ## Inbound Rule
-    ingress {
-       from_port = 22
-       to_port = 22
-       protocol = "tcp"
-       cidr_blocks = ["0.0.0.0/0"]
-       description = "For ssh port open" 
-    }
+## security group creation
+resource "aws_security_group" "demo_sg" {
+  name        = "terra_sg"
+  vpc_id      = aws_default_vpc.demo.id
 
-    ingress {
-       from_port = 80
-       to_port = 80
-       protocol = "tcp"
-       cidr_blocks = ["0.0.0.0/0"]
-       description = "for open http port"
-    }
+  ingress{
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  ingress{
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-    ingress {
-       from_port = 5173
-       to_port = 5173
-       protocol = "tcp"
-       cidr_blocks = ["0.0.0.0/0"]
-       description = "online-shop"
-    }
-    ## Outbount rule
-    egress {
-       from_port = 0
-       to_port = 0
-       protocol = "-1"
-       cidr_blocks = ["0.0.0.0/0"]
-       description = "all ports"
-    }
-}    
- # Create EC2 instance
-resource aws_instance microft {
-    key_name = aws_key_pair.create_key.key_name
-    security_groups = [aws_security_group.microft_security_group.name]
-    ami = var.ec2_ami_id
-    instance_type = var.ec2_instance_type
-    user_data = file("install_nginx.sh")
-    
-    root_block_device {
-        volume_size = var.ec2_root_volume_size
-        volume_type = "gp3"
-    }
-    tags = {
-        Name = "microft-tf-learning"
-    }     
+  ingress{
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
+  egress{
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+}
+
+## Create EC2 instance
+resource "aws_instance" "demo_instanmce" {
+  key_name = aws_key_pair.demo_key.key_name
+  security_groups = [aws_security_group.demo_sg.name]
+  ami           = var.ec2_ami_id
+  instance_type = var.ec2_instance_type
+
+  root_block_device {
+    volume_size = var.ec2_volume
+    volume_type = "gp3"
+  }
+
+  tags = {
+    Name = var.ec2_instance_name
+  }
 }
